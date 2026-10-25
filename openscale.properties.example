@@ -1,0 +1,47 @@
+# Copie para openscale.properties e ajuste.
+
+# ---------------------------------------------------------------- usuário
+# A Relaxmedic só mostra o peso depois de receber altura, idade e sexo.
+user.id=thiago
+user.name=Thiago
+user.heightCm=175
+user.age=40
+# M ou F
+user.gender=M
+# peso de referência; só precisa ser plausível
+user.weightKg=80
+
+cli.verbose=false
+
+# ---------------------------------------------------------------- CSV
+sync.csv.enabled=true
+sync.csv.directory=./dados
+sync.csv.zone=America/Fortaleza
+
+# ---------------------------------------------------------------- MQTT / Home Assistant
+sync.mqtt.enabled=false
+sync.mqtt.uri=tcp://192.168.0.10:1883
+sync.mqtt.username=
+sync.mqtt.password=
+sync.mqtt.clientId=openscale-java
+sync.mqtt.topicPrefix=openscale
+sync.mqtt.qos=1
+sync.mqtt.homeAssistant=true
+sync.mqtt.homeAssistantPrefix=homeassistant
+
+# ---------------------------------------------------------------- wger
+sync.wger.enabled=false
+sync.wger.baseUrl=https://wger.de
+# Configurações do wger → "API key"
+sync.wger.token=
+# Token (chave permanente) ou Bearer (JWT)
+sync.wger.authScheme=Token
+# AUTO tenta data+hora e cai para só data se o servidor recusar
+sync.wger.dateMode=AUTO
+sync.wger.zone=America/Fortaleza
+
+# ---------------------------------------------------------------- Health Connect
+# Fora do Android só existe o writer "log", que imprime os registros.
+sync.healthconnect.enabled=true
+sync.healthconnect.writer=log
+sync.healthconnect.zone=America/Fortaleza
