@@ -1,0 +1,47 @@
+name: Build and release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build and test
+        run: mvn -B -ntp verify
+
+      - name: Compute release tag
+        id: version
+        run: |
+          base=$(mvn -B -ntp -q help:evaluate -Dexpression=project.version -DforceStdout)
+          base=${base%-SNAPSHOT}
+          echo "tag=v${base}-build.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "$TAG" \
+            --generate-notes \
+            openscale-cli/target/openscale-cli.jar \
+            openscale-*/target/openscale-*-SNAPSHOT.jar
