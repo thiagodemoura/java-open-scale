@@ -1,6 +1,6 @@
 # openScale Java (`com.openscale`)
 
-Biblioteca Java pura (Maven, Java 17) para ler balanças Bluetooth e sincronizar
+Biblioteca Java pura (Maven, Java 25) para ler balanças Bluetooth e sincronizar
 as medições, inspirada no [openScale](https://github.com/oliexdev/openScale)
 e no openScale-sync.
 
